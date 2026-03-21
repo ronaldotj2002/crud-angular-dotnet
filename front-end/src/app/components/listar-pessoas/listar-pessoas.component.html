@@ -1,0 +1,47 @@
+<h2 class="text-2x1 font-bold mb-4">Lista de Pessoas</h2>
+<input type="text" placeholder="Buscar pessoa" (input)="buscar($event)" 
+class="mb-3 px-3 w-64">
+<table class="w-full border">
+    <thead class="bg-gray-200">
+        <tr>
+            <th class="p-2 border">Nome</th>
+            <th class="p-2 border">Idade</th>
+            <th class="p-2 border">Cidade</th>
+            <th class="p-2 border">Ações</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @for (pessoa of pessoasPaginadas(); track pessoa.id) {
+
+            <tr>
+                <td class="p-2 border">{{pessoa.nome}}</td>
+                <td class="p-2 border">{{pessoa.idade}}</td>
+                <td class="p-2 border">{{pessoa.cidade}}</td>
+                <td class="p-2 border space-x-2">
+                    <button class="bg-blue-500 text-white px-3 py-1 rounded"
+                    (click)="editar(pessoa.id, pessoa)">
+                    Editar
+                </button>
+                <button class="bg-red-500 text-white px-3 py-1 rounded"
+                (click)="excluir(pessoa.id)">
+                Excluir
+            </button>
+        </td>
+    </tr>
+    }
+    </tbody>
+</table>
+<app-paginacao
+    [paginaAtual]="paginaAtual()"
+    [totalDePaginas]="totalDePaginas()"
+    (mudarPagina)="paginaAtual.set($event)"
+    >
+
+</app-paginacao>
+<p>Página atual: {{ paginaAtual() }}</p>
+<br>
+<button class="bg-blue-500 text-white px-3 py-1 rounded block"
+                    (click)="cadastrar()">
+                    Cadastrar
+                </button>

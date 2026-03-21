@@ -1,0 +1,56 @@
+<div class="max-w-xl mx-auto mt-10 p-6 border rounded">
+    <h2 class="text-xl font-bold mb-6">
+        {{ id ? "Editar Pessoa" : "Cadastrar Pessoa" }}
+    </h2>
+    <form [formGroup]="form" (ngSubmit)="salvar()" class="flex flex-col gap-4">
+        <div>
+            <label>Nome</label>
+            <input type="text" formControlName="nome" class="border p-2 w-full rounded" />
+            @if (form.controls.nome.invalid && form.controls.nome.touched) {
+            <small class="text-red-500"> Nome é obrigatório </small>
+            }
+        </div>
+        <div>
+            <label>Idade</label>
+            <input type="number" formControlName="idade" class="border p-2 w-full rounded" />
+            @if (form.controls.idade.invalid && form.controls.idade.touched) {
+            <small class="text-red-500"> Idade inválida </small>
+            }
+        </div>
+        <div>
+            <label>Estado Civil</label>
+            <select formControlName="estadoCivil" class="border p-2 w-full rounded">
+                @for (estCivil of estadosCivis; track estCivil) {
+
+                    <option [ngValue]="estCivil">
+                        {{estCivil}}
+                    </option>
+                }
+               
+            </select>
+        </div>
+        <div>
+            <label>CPF</label>
+            <input type="text" formControlName="cpf" class="border p-2 w-full rounded" />
+            @if (form.controls.cpf.invalid && form.controls.cpf.touched) {
+            <small class="text-red-500"> CPF deve ter 11 números </small>
+            }
+        </div>
+        <div>
+            <label>Cidade</label>
+            <input type="text" formControlName="cidade" class="border p-2 w-full rounded" />
+        </div>
+        <div>
+            <label>Estado</label>
+            <input type="text" formControlName="estado" class="border p-2 w-full rounded" />
+        </div>
+        <div class="flex gap-3 mt-4">
+            <button type="submit"  class="bg-blue-600 text-white px-4 py-2 rounded" [disabled]="form.invalid">
+                Salvar
+            </button>
+            <button type="button" (click)="voltar()" class="bg-gray-500 text-white px-4 py-2 rounded">
+                Cancelar
+            </button>
+        </div>
+    </form>
+</div>

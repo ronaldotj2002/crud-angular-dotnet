@@ -1,0 +1,6 @@
+@WebHexagon_HostAddress = http://localhost:5117
+
+GET {{WebHexagon_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

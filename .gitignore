@@ -1,0 +1,15 @@
+# Visual Studio
+.vs/
+*.user
+*.suo 
+
+# .NET
+back-end/bin/
+back-end/obj/
+
+# Angular
+front-end/node_modules/
+front-end/dist/
+
+# VS Code
+.vscode/

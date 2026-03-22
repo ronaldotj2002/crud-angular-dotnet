@@ -18,13 +18,9 @@ export class ListarPessoasComponent implements OnInit {
   private pessoaervice = inject(PessoaService);
   private router = inject(Router)
 
+  loading = signal(false);
   paginaAtual = signal(1);
   itensPorPagina = 5;
-  // pessoas = signal<Pessoa[]>([]);
-
-  // get totalDePaginas(): number {
-  //   return Math.ceil(this.pessoas.length / this.itensPorPagina)
-  // }
 
   termoDeBusca = signal('');
 
@@ -48,12 +44,6 @@ export class ListarPessoasComponent implements OnInit {
     Math.ceil(this.pessoas().length / this.itensPorPagina)
   )
 
-  // get pessoasPaginadas(): Pessoa[] {
-  //   const inicio = (this.paginaAtual - 1) * this.itensPorPagina;
-  //   const fim = inicio + this.itensPorPagina
-
-  //   return this.pessoas().slice(inicio, fim);
-  // }
   pessoasPaginadas = computed(() => {
     const inicio = (this.paginaAtual() - 1) * this.itensPorPagina;
     const fim = inicio + this.itensPorPagina
@@ -64,7 +54,18 @@ export class ListarPessoasComponent implements OnInit {
   pessoas = this.pessoaervice.pessoas;
 
   ngOnInit(): void {
-    this.pessoaervice.listar();
+    this.carregarDados();
+  }
+
+  async carregarDados() {
+    this.loading.set(true);
+
+    try {
+      const dados = await this.pessoaervice.listar();
+      this.pessoas.set(dados);
+    } finally {
+      this.loading.set(false)
+    }
   }
   
   excluir(id: number) {    

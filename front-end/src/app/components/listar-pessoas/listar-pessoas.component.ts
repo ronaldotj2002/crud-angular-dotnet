@@ -21,8 +21,11 @@ export class ListarPessoasComponent implements OnInit {
   loading = signal(false);
   paginaAtual = signal(1);
   itensPorPagina = 5;
+  id!: number;
 
   termoDeBusca = signal('');
+  modalConfirmacao = signal(false);
+  toatsSucesso = signal(false);
 
   buscar(event: Event) {
     const input = event.target as HTMLInputElement;
@@ -67,10 +70,23 @@ export class ListarPessoasComponent implements OnInit {
       this.loading.set(false)
     }
   }
-  
-  excluir(id: number) {    
-      this.pessoaervice.excluir(id);   
 
+  openModal(id: number) {
+      this.modalConfirmacao.set(true);
+      this.id = id
+    }
+  
+  excluir() {    
+    this.modalConfirmacao.set(false);
+    this.pessoaervice.excluir(this.id);   
+    this.confirmado();
+  }
+
+  confirmado() {
+  this.toatsSucesso.set(true);
+    setTimeout(() => {
+      this.toatsSucesso.set(false);
+    }, 5000);
   }
 
   editar(id: number, pessoa: Pessoa) {    

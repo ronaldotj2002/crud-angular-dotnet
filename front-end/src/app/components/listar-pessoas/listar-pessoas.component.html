@@ -6,7 +6,6 @@
         </div>
     </div>
     } @else {
-
    
             <div class="flex items-center justify-between mb-6 px-3 mt-6">
                 <h1 class="text-center font-semibold mt-5">Pessoas Cadastradas</h1>
@@ -18,8 +17,11 @@
                 
                 <button (click)="cadastrar()" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
                     + Incluir Pessoa
-                </button>
+                </button> 
                 
+                <button (click)="logout()" class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition">
+                    Logout
+                </button>
             </div>
       
 

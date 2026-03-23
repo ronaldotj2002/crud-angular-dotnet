@@ -1,16 +1,19 @@
 <div class="max-w-xl mx-auto mt-10 p-6 border rounded">
     <div class="flex justify-between gap-3">
 
-        <h2 class="text-xl font-bold mb-6">
-            {{ id ? "Editar Pessoa" : "Cadastrar Pessoa" }}
-        </h2>
-
-        <button (click)="voltar()" class="bg-blue-600 text-white px-4 py-2 rounded block">
-            Voltar para a tela inicial
+        <button (click)="voltar()" class="bg-blue-600 hover:bg-blue-700 transition text-white px-4 py-2 rounded block">
+            Voltar
         </button>
-
+        <button (click)="logout()" class="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition">
+            Logout
+        </button>
+        
+        
     </div>
     <hr class="my-5">
+    <h2 class="text-xl font-bold mb-6 text-center">
+        {{ id ? "Editar Pessoa" : "Cadastrar Pessoa" }}
+    </h2>
     <form [formGroup]="form" (ngSubmit)="openModal()" class="flex flex-col gap-4">
         <div>
             <label>Nome</label>

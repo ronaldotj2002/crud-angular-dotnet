@@ -1,31 +1,21 @@
-<div class="flex justify-center items-center gap-2 mt-6">
+<div class="flex justify-center items-center mt-6">
 
-    <button 
+    <button class="border border-gray-400 px-4 py-1 bg-slate-50 prev hover:bg-slate-100"
         (click)="paginaAnterior()"
         [disabled]="paginaAtual === 1"
         >
-        Anterior
+        <
     </button>
-<span>
+<span class="border border-gray-400 px-2 bg-slate-50 py-1">
     Página {{ paginaAtual }} de {{ totalDePaginas }}
 </span>
-    <!-- @for (pagina of paginas; track pagina) {
-        
-        <button 
-        (click)="irParaPagina(pagina)"
-        [class.bg-blue-600]="pagina === paginaAtual"
-        [class.text-white]="pagina === paginaAtual"
-        class="px-3 py-1 border rounded"
-        >
-        {{ pagina }}
-    </button>
-    } -->
-
-    <button 
+  
+    <button class="border border-gray-400 px-4 py-1 bg-slate-50 next hover:bg-slate-100"
         (click)="proximaPagina()"
         [disabled]="paginaAtual === totalDePaginas"
         >
-        Próxima
+        >
     </button>
 </div>
+
 

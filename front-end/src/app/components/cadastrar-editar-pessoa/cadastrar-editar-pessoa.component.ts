@@ -1,13 +1,14 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { PessoaService } from '../../services/pessoa.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { CpfMaskDirective } from '../../shared/directives/cpf-mask.directive';
 
 
 @Component({
   selector: 'app-cadastrar-editar-pessoa',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, CpfMaskDirective],
   templateUrl: './cadastrar-editar-pessoa.component.html',
   styleUrl: './cadastrar-editar-pessoa.component.css',
 })
@@ -26,10 +27,20 @@ export class CadastrarEditarPessoaComponent implements OnInit{
       'Divorciado(a)',
       'Viúvo(a)'
     ]
+
+    estados = [
+      "AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES",
+      "GO", "MA", "MT", "MS", "MG", "PA", "PB", "PR",
+      "PE", "PI", "RJ", "RN", "RS", "RO", "RR", "SC",
+      "SP", "SE", "TO"
+    ];
+
+    modalConfirmacao = signal(false);
+    toatsSucesso = signal(false);
    
     form = this.fb.nonNullable.group({
       nome: ['', Validators.required],
-      idade: [0, Validators.required],
+      idade: [0, Validators.min(18)],
       estadoCivil: ['', Validators.required],
       cpf: ['', Validators.required],
       cidade: ['', Validators.required],
@@ -38,7 +49,7 @@ export class CadastrarEditarPessoaComponent implements OnInit{
 
     async ngOnInit() {
       const idParam = this.route.snapshot.paramMap.get('id');
-console.log("ID_PARAM", idParam);
+
       if(idParam) {
         this.id = Number(idParam);
         
@@ -51,12 +62,14 @@ console.log("ID_PARAM", idParam);
       }
     }
 
-  async salvar() {
-console.log("SALVAR .........")
-    // if (this.form.invalid) return;
-// console.log(this.form);
-    const formValue = this.form.getRawValue();
+    openModal() {
+      this.modalConfirmacao.set(true);
+    }
 
+  async salvar() {
+console.log("salvar ...")
+    this.modalConfirmacao.set(false);
+    const formValue = this.form.getRawValue();
     
     if(this.id) {
 
@@ -65,19 +78,28 @@ console.log("SALVAR .........")
         ...formValue
       }
 
-      await this.pessoaService.editar(
-        this.id,
-        dados
-      );
+      await this.pessoaService.editar(this.id, dados);
+      this.confirmado();
       
     } else {
-      this.pessoaService.cadastrar(
-        formValue
-      )
-      console.log("DADOS", formValue)
-    }
+      this.pessoaService.cadastrar(formValue);
+      this.confirmado();
   }
 
+}
+confirmado() {
+  
+  this.toatsSucesso.set(true);
+  
+    setTimeout(() => {
+      this.toatsSucesso.set(false);
+    }, 5000);
+    this.resetCampos();
+  }
+
+  resetCampos() {
+    this.form.reset();
+  }
   voltar() {
     this.router.navigate(['/']);
   }

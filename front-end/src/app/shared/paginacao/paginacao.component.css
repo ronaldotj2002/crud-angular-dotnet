@@ -1,0 +1,7 @@
+.prev {
+    border-radius: 7px 0 0 7px;
+}
+
+.next {
+    border-radius: 0 7px 7px 0;
+}

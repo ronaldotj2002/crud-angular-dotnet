@@ -14,11 +14,11 @@ export class PessoaService {
 
     constructor(private http: HttpClient) {}
 
-    async listar() {
-        const dados = await firstValueFrom(
-            this.http.get<any[]>(this.api)
+    async listar(): Promise<Pessoa[]> {
+        return firstValueFrom(
+            this.http.get<Pessoa[]>(this.api)
         );
-        this.pessoas.set(dados)
+        // this.pessoas.set(dados)
     }
 
     async cadastrar(pessoa: any) {

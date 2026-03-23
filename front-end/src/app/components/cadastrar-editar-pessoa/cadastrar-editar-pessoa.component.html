@@ -1,15 +1,14 @@
-
 <div class="max-w-xl mx-auto mt-10 p-6 border rounded">
     <div class="flex justify-between gap-3">
 
         <h2 class="text-xl font-bold mb-6">
             {{ id ? "Editar Pessoa" : "Cadastrar Pessoa" }}
         </h2>
-        
-        <button (click)="voltar()"  class="bg-blue-600 text-white px-4 py-2 rounded block">
+
+        <button (click)="voltar()" class="bg-blue-600 text-white px-4 py-2 rounded block">
             Voltar para a tela inicial
         </button>
-       
+
     </div>
     <hr class="my-5">
     <form [formGroup]="form" (ngSubmit)="openModal()" class="flex flex-col gap-4">
@@ -32,19 +31,16 @@
             <select formControlName="estadoCivil" class="border p-2 w-full rounded">
                 @for (estCivil of estadosCivis; track estCivil) {
 
-                    <option [ngValue]="estCivil">
-                        {{estCivil}}
-                    </option>
+                <option [ngValue]="estCivil">
+                    {{estCivil}}
+                </option>
                 }
-               
+
             </select>
         </div>
         <div>
             <label>CPF</label>
-            <input type="text" 
-                cpfMask
-                formControlName="cpf" 
-                class="border p-2 w-full rounded" />
+            <input type="text" cpfMask formControlName="cpf" class="border p-2 w-full rounded" />
             @if (form.controls.cpf.invalid && form.controls.cpf.touched) {
             <small class="text-red-500"> CPF deve ter 11 números </small>
             }
@@ -58,16 +54,17 @@
             <select formControlName="estado" class="border p-2 w-full rounded">
                 @for (estado of estados; track estado) {
 
-                    <option [ngValue]="estado">
-                        {{estado}}
-                    </option>
+                <option [ngValue]="estado">
+                    {{estado}}
+                </option>
                 }
-               
+
             </select>
-          
+
         </div>
         <div class="flex justify-between gap-3 mt-4">
-            <button type="submit" [class.bg-blue-300]="form.invalid"  class="bg-blue-600 text-white px-4 py-2 rounded" [disabled]="form.invalid">
+            <button type="submit" [class.bg-blue-300]="form.invalid" class="bg-blue-600 text-white px-4 py-2 rounded"
+                [disabled]="form.invalid">
                 Salvar
             </button>
             <button type="button" (click)="resetCampos()" class="bg-gray-500 text-white px-4 py-2 rounded">
@@ -78,32 +75,32 @@
 </div>
 
 @if (modalConfirmacao()) {
-    <div class="fixed inset-0 flex items-center justify-center bg-black/40">
-        <div class="bg-white p-6 rounded-lg shadow-lg w-96">
-            <h2 class="text-lg font-semibold mb-4 text-center">{{ id ? "Confirmar Edição" : "Confirmar Cadastro"}}</h2>
+<div class="fixed inset-0 flex items-center justify-center bg-black/40">
+    <div class="bg-white p-6 rounded-lg shadow-lg w-96">
+        <h2 class="text-lg font-semibold mb-4 text-center">{{ id ? "Confirmar Edição" : "Confirmar Cadastro"}}</h2>
 
-            <p class="mb-6 text-center">
-                {{ id ? "Deseja Confirmar a edição?" : "Deseja Confirmar o cadastro?" }}
-                
-            </p>
+        <p class="mb-6 text-center">
+            {{ id ? "Deseja Confirmar a edição?" : "Deseja Confirmar o cadastro?" }}
 
-            <div class="flex justify-between gap-3">
+        </p>
 
-                <button class="px-4 py-2 bg-gray-300 rounded" (click)="modalConfirmacao.set(false)">
-                    Cancelar
-                </button>
+        <div class="flex justify-between gap-3">
 
-                <button class="px-4 py-2 bg-blue-600 text-white rounded" (click)="salvar()">
-                    Confirmar
-                </button>
+            <button class="px-4 py-2 bg-gray-300 rounded" (click)="modalConfirmacao.set(false)">
+                Cancelar
+            </button>
 
-            </div>
+            <button class="px-4 py-2 bg-blue-600 text-white rounded" (click)="salvar()">
+                Confirmar
+            </button>
+
         </div>
     </div>
+</div>
 }
 
 @if (toatsSucesso()) {
-    <div class="fixed w-3/12 top-5 right-5 bg-green-600 text-white px-6 py-3 rounded shadow-lg">
-        {{id ? "Edição realizada com sucesso!" : "Cadastro realizado com sucesso!"}}
-    </div>
+<div class="fixed w-3/12 top-5 right-5 bg-green-600 text-white px-6 py-3 rounded shadow-lg">
+    {{id ? "Edição realizada com sucesso!" : "Cadastro realizado com sucesso!"}}
+</div>
 }

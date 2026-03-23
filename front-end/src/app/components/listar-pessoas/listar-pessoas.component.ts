@@ -4,11 +4,12 @@ import { PessoaService } from '../../services/pessoa.service';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { PaginacaoComponent } from '../../shared/paginacao/paginacao.component';
+import { CpfPipe } from '../../shared/pipes/cpf.pipe';
 
 @Component({
   selector: 'app-listar-pessoas',
   standalone: true,
-  imports: [CommonModule, RouterModule, PaginacaoComponent],
+  imports: [CommonModule, RouterModule, PaginacaoComponent, CpfPipe],
   templateUrl: './listar-pessoas.component.html',
   styleUrl: './listar-pessoas.component.css',
 })

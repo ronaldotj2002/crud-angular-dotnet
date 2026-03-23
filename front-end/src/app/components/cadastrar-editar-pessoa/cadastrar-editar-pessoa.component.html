@@ -1,7 +1,17 @@
+
 <div class="max-w-xl mx-auto mt-10 p-6 border rounded">
-    <h2 class="text-xl font-bold mb-6">
-        {{ id ? "Editar Pessoa" : "Cadastrar Pessoa" }}
-    </h2>
+    <div class="flex justify-between gap-3">
+
+        <h2 class="text-xl font-bold mb-6">
+            {{ id ? "Editar Pessoa" : "Cadastrar Pessoa" }}
+        </h2>
+        
+        <button (click)="voltar()"  class="bg-blue-600 text-white px-4 py-2 rounded block">
+            Voltar para a tela inicial
+        </button>
+       
+    </div>
+    <hr class="my-5">
     <form [formGroup]="form" (ngSubmit)="openModal()" class="flex flex-col gap-4">
         <div>
             <label>Nome</label>
@@ -12,7 +22,7 @@
         </div>
         <div>
             <label>Idade</label>
-            <input type="number" formControlName="idade" class="border p-2 w-full rounded" />
+            <input type="number" formControlName="idade" min="18" class="border p-2 w-full rounded" />
             @if (form.controls.idade.invalid && form.controls.idade.touched) {
             <small class="text-red-500"> Idade inválida </small>
             }
@@ -31,7 +41,10 @@
         </div>
         <div>
             <label>CPF</label>
-            <input type="text" formControlName="cpf" class="border p-2 w-full rounded" />
+            <input type="text" 
+                cpfMask
+                formControlName="cpf" 
+                class="border p-2 w-full rounded" />
             @if (form.controls.cpf.invalid && form.controls.cpf.touched) {
             <small class="text-red-500"> CPF deve ter 11 números </small>
             }
@@ -53,7 +66,7 @@
             </select>
           
         </div>
-        <div class="flex gap-3 mt-4">
+        <div class="flex justify-between gap-3 mt-4">
             <button type="submit" [class.bg-blue-300]="form.invalid"  class="bg-blue-600 text-white px-4 py-2 rounded" [disabled]="form.invalid">
                 Salvar
             </button>
@@ -62,11 +75,6 @@
             </button>
         </div>
     </form>
-</div>
-<div class="max-w-xl mx-auto mt-10 p-6">
-    <button (click)="voltar()"  class="bg-blue-600 text-white px-4 py-2 rounded block">
-        Voltar
-    </button>
 </div>
 
 @if (modalConfirmacao()) {
@@ -95,7 +103,7 @@
 }
 
 @if (toatsSucesso()) {
-    <div class="fixed botton-5 right-5 bg-green-600 text-white px-6 py-3 rounded shadow-lg">
+    <div class="fixed w-3/12 top-5 right-5 bg-green-600 text-white px-6 py-3 rounded shadow-lg">
         {{id ? "Edição realizada com sucesso!" : "Cadastro realizado com sucesso!"}}
     </div>
 }

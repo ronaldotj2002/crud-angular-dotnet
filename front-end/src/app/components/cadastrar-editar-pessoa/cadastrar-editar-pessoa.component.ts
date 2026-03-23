@@ -2,12 +2,13 @@ import { Component, inject, OnInit, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { PessoaService } from '../../services/pessoa.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { CpfMaskDirective } from '../../shared/directives/cpf-mask.directive';
 
 
 @Component({
   selector: 'app-cadastrar-editar-pessoa',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, CpfMaskDirective],
   templateUrl: './cadastrar-editar-pessoa.component.html',
   styleUrl: './cadastrar-editar-pessoa.component.css',
 })
@@ -39,7 +40,7 @@ export class CadastrarEditarPessoaComponent implements OnInit{
    
     form = this.fb.nonNullable.group({
       nome: ['', Validators.required],
-      idade: [0, Validators.required],
+      idade: [0, Validators.min(18)],
       estadoCivil: ['', Validators.required],
       cpf: ['', Validators.required],
       cidade: ['', Validators.required],
@@ -66,7 +67,7 @@ export class CadastrarEditarPessoaComponent implements OnInit{
     }
 
   async salvar() {
-
+console.log("salvar ...")
     this.modalConfirmacao.set(false);
     const formValue = this.form.getRawValue();
     
@@ -87,7 +88,9 @@ export class CadastrarEditarPessoaComponent implements OnInit{
 
 }
 confirmado() {
+  
   this.toatsSucesso.set(true);
+  
     setTimeout(() => {
       this.toatsSucesso.set(false);
     }, 5000);

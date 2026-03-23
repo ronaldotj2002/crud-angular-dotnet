@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { PaginacaoComponent } from '../../shared/paginacao/paginacao.component';
 import { CpfPipe } from '../../shared/pipes/cpf.pipe';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-listar-pessoas',
@@ -17,16 +18,18 @@ export class ListarPessoasComponent implements OnInit {
 
   
   private pessoaervice = inject(PessoaService);
-  private router = inject(Router)
+  private router       = inject(Router)
+  private auth         = inject(AuthService)
 
-  loading = signal(false);
-  paginaAtual = signal(1);
-  itensPorPagina = 5;
+  loading        = signal(false);
+  paginaAtual    = signal(1);
+  itensPorPagina = 5;                   
   id!: number;
 
-  termoDeBusca = signal('');
+  isLogado         = this.auth.usuarioLogado;
+  termoDeBusca     = signal('');
   modalConfirmacao = signal(false);
-  toatsSucesso = signal(false);
+  toatsSucesso     = signal(false);
 
   buscar(event: Event) {
     const input = event.target as HTMLInputElement;
@@ -99,5 +102,8 @@ export class ListarPessoasComponent implements OnInit {
     this.router.navigate([`/pessoa-form/`]);
   }
 
+  logout() {
+    this.auth.logout();
+  }
 
 }

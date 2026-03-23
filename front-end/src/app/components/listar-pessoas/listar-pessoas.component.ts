@@ -4,11 +4,12 @@ import { PessoaService } from '../../services/pessoa.service';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { PaginacaoComponent } from '../../shared/paginacao/paginacao.component';
+import { CpfPipe } from '../../shared/pipes/cpf.pipe';
 
 @Component({
   selector: 'app-listar-pessoas',
   standalone: true,
-  imports: [CommonModule, RouterModule, PaginacaoComponent],
+  imports: [CommonModule, RouterModule, PaginacaoComponent, CpfPipe],
   templateUrl: './listar-pessoas.component.html',
   styleUrl: './listar-pessoas.component.css',
 })
@@ -18,15 +19,14 @@ export class ListarPessoasComponent implements OnInit {
   private pessoaervice = inject(PessoaService);
   private router = inject(Router)
 
+  loading = signal(false);
   paginaAtual = signal(1);
   itensPorPagina = 5;
-  // pessoas = signal<Pessoa[]>([]);
-
-  // get totalDePaginas(): number {
-  //   return Math.ceil(this.pessoas.length / this.itensPorPagina)
-  // }
+  id!: number;
 
   termoDeBusca = signal('');
+  modalConfirmacao = signal(false);
+  toatsSucesso = signal(false);
 
   buscar(event: Event) {
     const input = event.target as HTMLInputElement;
@@ -48,12 +48,6 @@ export class ListarPessoasComponent implements OnInit {
     Math.ceil(this.pessoas().length / this.itensPorPagina)
   )
 
-  // get pessoasPaginadas(): Pessoa[] {
-  //   const inicio = (this.paginaAtual - 1) * this.itensPorPagina;
-  //   const fim = inicio + this.itensPorPagina
-
-  //   return this.pessoas().slice(inicio, fim);
-  // }
   pessoasPaginadas = computed(() => {
     const inicio = (this.paginaAtual() - 1) * this.itensPorPagina;
     const fim = inicio + this.itensPorPagina
@@ -64,12 +58,36 @@ export class ListarPessoasComponent implements OnInit {
   pessoas = this.pessoaervice.pessoas;
 
   ngOnInit(): void {
-    this.pessoaervice.listar();
+    this.carregarDados();
   }
-  
-  excluir(id: number) {    
-      this.pessoaervice.excluir(id);   
 
+  async carregarDados() {
+    this.loading.set(true);
+
+    try {
+      const dados = await this.pessoaervice.listar();
+      this.pessoas.set(dados);
+    } finally {
+      this.loading.set(false)
+    }
+  }
+
+  openModal(id: number) {
+      this.modalConfirmacao.set(true);
+      this.id = id
+    }
+  
+  excluir() {    
+    this.modalConfirmacao.set(false);
+    this.pessoaervice.excluir(this.id);   
+    this.confirmado();
+  }
+
+  confirmado() {
+  this.toatsSucesso.set(true);
+    setTimeout(() => {
+      this.toatsSucesso.set(false);
+    }, 5000);
   }
 
   editar(id: number, pessoa: Pessoa) {    

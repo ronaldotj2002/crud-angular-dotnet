@@ -16,7 +16,7 @@ namespace WebHexagon.Controllers
         [HttpPost("login")]
         public IActionResult Login(UsuarioLogin login)
         {
-            if (login.Usuario != "usuario" || login.Senha != "hexagon")
+            if (login.Usuario != "ronaldo" || login.Senha != "teste")
                 return Unauthorized();
                     
 

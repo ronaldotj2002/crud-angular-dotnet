@@ -53,9 +53,7 @@ export class CadastrarEditarPessoaComponent implements OnInit{
       if(idParam) {
         this.id = Number(idParam);
         
-
         const pessoa = await this.pessoaService.buscarPorId(this.id)
-       console.log("ID_PARAM - pessoa", pessoa);
         // const pessoa = this.pessoaService.pessoas().find(p => p.id === this.id);
         this.form.patchValue(pessoa)
         
@@ -67,7 +65,7 @@ export class CadastrarEditarPessoaComponent implements OnInit{
     }
 
   async salvar() {
-console.log("salvar ...")
+
     this.modalConfirmacao.set(false);
     const formValue = this.form.getRawValue();
     

@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("WebHexagon")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+4b3153d03d7ef667c38e5df3a4cba4daa34142da")]
 [assembly: System.Reflection.AssemblyProductAttribute("WebHexagon")]
 [assembly: System.Reflection.AssemblyTitleAttribute("WebHexagon")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

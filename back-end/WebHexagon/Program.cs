@@ -2,8 +2,32 @@ using Microsoft.EntityFrameworkCore;
 using WebHexagon.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
+
+var key = Encoding.ASCII.GetBytes("chave_secreta_acesso_key_jwt_auth");
+
+// Autenticação
+builder.Services.AddAuthentication(options =>
+    {
+        options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+        options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+
+    }).AddJwtBearer(options =>
+    {
+        options.RequireHttpsMetadata = false;
+        options.SaveToken = true;
+
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(key),
+            ValidateIssuer = false,
+            ValidateAudience = false
+        };
+    });
+builder.Services.AddAuthentication();
 
 // Add services to the container.
 
@@ -41,6 +65,10 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseAuthentication();
+
+app.UseAuthentication();
 
 app.UseHttpsRedirection();
 

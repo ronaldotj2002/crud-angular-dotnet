@@ -39,6 +39,9 @@ Aplicação **Full Stack** para gerenciamento de pessoas, desenvolvida com **Ang
 
 # 📌 Funcionalidades
 
+✔ Login com JWT
+✔ Guards de Rotas (Front)
+✔ Mensagem de Erro
 ✔ Cadastro de pessoas
 ✔ Listagem de pessoas
 ✔ Edição de pessoas
@@ -56,7 +59,20 @@ Aplicação **Full Stack** para gerenciamento de pessoas, desenvolvida com **Ang
 * Gerenciamento de estado com **Angular Signals**
 * **Computed Signals** para paginação e filtros
 * Arquitetura modular baseada em componentes
-* Integração com **API REST**
+* Integração com **API REST firstValueFrom**
+
+* **Signals:** por ser mais simples que o RXJS, tem atualização automática da UI, menos código e o Angular controla a reatividade
+* **Computed:** recalcula o estado do signals sozinho, deixando o estado previsivel
+* **firstValueFrom:** evitar memory leaks
+
+* **Back-end .NET**
+
+* Implementação de **CRUD**
+* Autenticação baseada em **JWT**
+* Aplicação de **Dependency Injection**
+* Proteção de endpoints com **Authorize**
+* Integração com front-end Angular via **CORS**
+* Estruturação de controllers e modelos seguindo boas práticas de API
 
 ---
 
@@ -70,9 +86,15 @@ crud-pessoas
 │   │   ├── listar-pessoas
 │   │   ├── cadastro-pessoa
 │   │   └── paginacao
+│   ├── guards
+│   ├── interseptors
 │   │
 │   ├── models
+│   ├── pages
+│   │    └── login
 │   ├── services
+|   |     └── authService
+|   |     └── pessoaService
 │   ├── shared
 |   |    └── directives
 |   |    └── paginacao
@@ -97,7 +119,7 @@ git clone https://github.com/ronaldotj2002/crud-angular-dotnet.git
 
 ---
 
-# 2️⃣ Rodar o Back-end
+## 2️⃣ Rodar o Back-end
 
 Entrar na pasta:
 
@@ -119,7 +141,7 @@ https://localhost:7184 ou http://localhost:5117
 
 ---
 
-# 3️⃣ Rodar o Front-end
+## 3️⃣ Rodar o Front-end
 
 Entrar na pasta:
 
@@ -144,12 +166,16 @@ Aplicação disponível em:
 ```
 http://localhost:4200
 ```
+---
+
+## Login
+**Usuário:** ronaldo
+**Senha:** teste
 
 ---
 
 # 📈 Melhorias futuras
 
-* Autenticação com **JWT**
 * Paginação **server-side**
 * Testes unitários
 

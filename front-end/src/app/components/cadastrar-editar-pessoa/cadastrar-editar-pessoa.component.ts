@@ -3,6 +3,7 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { PessoaService } from '../../services/pessoa.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CpfMaskDirective } from '../../shared/directives/cpf-mask.directive';
+import { AuthService } from '../../services/auth.service';
 
 
 @Component({
@@ -14,10 +15,11 @@ import { CpfMaskDirective } from '../../shared/directives/cpf-mask.directive';
 })
 export class CadastrarEditarPessoaComponent implements OnInit{
 
-    private fb = inject(FormBuilder);
+    private fb            = inject(FormBuilder);
     private pessoaService = inject(PessoaService);
-    private route = inject(ActivatedRoute);
-    private router = inject(Router);
+    private route         = inject(ActivatedRoute);
+    private router        = inject(Router);
+    private auth          = inject(AuthService)
 
     id: number | null = null;
 
@@ -39,13 +41,14 @@ export class CadastrarEditarPessoaComponent implements OnInit{
     toatsSucesso = signal(false);
    
     form = this.fb.nonNullable.group({
-      nome: ['', Validators.required],
-      idade: [0, Validators.min(18)],
+      nome:        ['', Validators.required],
+      idade:       [0, Validators.min(18)],
       estadoCivil: ['', Validators.required],
-      cpf: ['', Validators.required],
-      cidade: ['', Validators.required],
-      estado: ['', Validators.required]
+      cpf:         ['', Validators.required],
+      cidade:      ['', Validators.required],
+      estado:      ['', Validators.required]
     })
+ 
 
     async ngOnInit() {
       const idParam = this.route.snapshot.paramMap.get('id');
@@ -100,5 +103,9 @@ confirmado() {
   }
   voltar() {
     this.router.navigate(['/']);
+  }
+
+  logout() {
+    this.auth.logout();
   }
 }

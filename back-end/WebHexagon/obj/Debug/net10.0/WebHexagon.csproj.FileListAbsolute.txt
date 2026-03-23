@@ -323,3 +323,4 @@ C:\Users\Ronaldo\source\repos\crud-pessoas\back-end\WebHexagon\obj\Debug\net10.0
 C:\Users\Ronaldo\source\repos\crud-pessoas\back-end\WebHexagon\obj\Debug\net10.0\WebHexagon.pdb
 C:\Users\Ronaldo\source\repos\crud-pessoas\back-end\WebHexagon\obj\Debug\net10.0\WebHexagon.genruntimeconfig.cache
 C:\Users\Ronaldo\source\repos\crud-pessoas\back-end\WebHexagon\obj\Debug\net10.0\ref\WebHexagon.dll
+C:\Users\Ronaldo\source\repos\crud-pessoas\back-end\WebHexagon\obj\Debug\net10.0\WebHexagon.sourcelink.json

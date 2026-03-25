@@ -23,7 +23,7 @@ export class ListarPessoasComponent implements OnInit {
 
   loading        = signal(false);
   paginaAtual    = signal(1);
-  itensPorPagina = 5;                   
+  itensPorPagina = 6;                   
   id!: number;
 
   isLogado         = this.auth.usuarioLogado;

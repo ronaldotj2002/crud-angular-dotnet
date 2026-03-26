@@ -43,7 +43,7 @@
         </div>
         <div>
             <label>CPF</label>
-            <input type="text" cpfMask formControlName="cpf" class="border p-2 w-full rounded" />
+            <input type="text"(keyup)="digito($event)" maxlength="14" [class.text-red-500]="cpfInvalido" cpfMask formControlName="cpf" class="border p-2 w-full rounded" />
             @if (form.controls.cpf.invalid && form.controls.cpf.touched) {
             <small class="text-red-500"> CPF deve ter 11 números </small>
             }
@@ -105,5 +105,11 @@
 @if (toatsSucesso()) {
 <div class="fixed w-3/12 top-5 right-5 bg-green-600 text-white px-6 py-3 rounded shadow-lg">
     {{id ? "Edição realizada com sucesso!" : "Cadastro realizado com sucesso!"}}
+</div>
+}
+
+@if (toatsErro()) {
+<div class="fixed w-3/12 top-5 right-5 bg-red-600 text-white px-6 py-3 rounded shadow-lg">
+    {{ msgErro }}
 </div>
 }

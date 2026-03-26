@@ -22,6 +22,8 @@ export class CadastrarEditarPessoaComponent implements OnInit{
     private auth          = inject(AuthService)
 
     id: number | null = null;
+    msgErro: string = "";
+    cpfInvalido: boolean = false;
 
     estadosCivis = [
       'Solteiro(a)',
@@ -39,12 +41,13 @@ export class CadastrarEditarPessoaComponent implements OnInit{
 
     modalConfirmacao = signal(false);
     toatsSucesso = signal(false);
+    toatsErro= signal(false);
    
     form = this.fb.nonNullable.group({
       nome:        ['', Validators.required],
       idade:       [0, Validators.min(18)],
       estadoCivil: ['', Validators.required],
-      cpf:         ['', Validators.required],
+      cpf:         ['', [Validators.required, Validators.pattern(/^\d{3}\.\d{3}\.\d{3}\-\d{2}$/)]],
       cidade:      ['', Validators.required],
       estado:      ['', Validators.required]
     })
@@ -71,6 +74,9 @@ export class CadastrarEditarPessoaComponent implements OnInit{
 
     this.modalConfirmacao.set(false);
     const formValue = this.form.getRawValue();
+    const cpf = formValue.cpf.replace(/\D/g, "");
+    formValue.cpf = cpf;
+
     
     if(this.id) {
 
@@ -83,8 +89,22 @@ export class CadastrarEditarPessoaComponent implements OnInit{
       this.confirmado();
       
     } else {
-      this.pessoaService.cadastrar(formValue);
-      this.confirmado();
+      
+      try {
+        await this.pessoaService.cadastrar(formValue);
+        this.confirmado();
+
+      } catch (err: any) {
+
+        if(err.status === 409) {
+          this.ErroCadastro();
+          this.msgErro = err.error;
+          this.cpfInvalido = true;
+          
+
+        }
+
+      } 
   }
 
 }
@@ -98,6 +118,18 @@ confirmado() {
     this.resetCampos();
   }
 
+  ErroCadastro() {
+    this.toatsErro.set(true);
+
+    setTimeout(() => {
+      this.toatsErro.set(false);
+    }, 5000);
+  }
+
+  digito(e: any) {
+    this.cpfInvalido = false;
+  }
+  
   resetCampos() {
     this.form.reset();
   }

@@ -38,6 +38,13 @@ namespace WebHexagon.Controllers
         [HttpPost]
         public IActionResult Post(Pessoa pessoa)
         {
+           var verificarCpf = _context.Pessoas.Any(p => p.CPF == pessoa.CPF);
+
+            if(verificarCpf)
+            {
+                return Conflict("CPF já cadastrado.");
+            }           
+
             _context.Pessoas.Add(pessoa);
             _context.SaveChanges();
             return Ok(pessoa);

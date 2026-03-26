@@ -166,7 +166,7 @@ Aplicação disponível em:
 ```
 http://localhost:4200
 ```
----
+--- 
 
 ## Login
 **Usuário:** ronaldo
